@@ -19,24 +19,29 @@ class NFC():
         self.wakeReader = bytearray([85, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 3, 253, 212, 20, 1, 23, 0])
         self.deviceInfo = bytearray([0, 0, 255, 2, 254, 212, 2, 42, 0])
         self.readTag = bytearray([0, 0, 255, 4, 252, 212, 74, 1, 0, 225, 0])
+        self.NFC_locate = ""
 
-    def wake(self, NFC_locate):
-        ser = serial.Serial(NFC_locate, 115200, timeout=1)
+    def wake(self, NFC_locate = "COM6"):
+        try:
+            ser = serial.Serial(NFC_locate, 115200, timeout=1)
+        except:
+            return "ERROR"
+        self.NFC_locate = NFC_locate
         ser.write(self.wakeReader)
         Ack = str(ser.read(15)).upper().split('\\X')
-#       response = "return wake block = "
+        response = ""
         for x in range(1, len(Ack)):
             if x == len(Ack)-1:
-                response = response + ' ' + Ack[x].split("'")[0]
+                response = response + Ack[x].split("'")[0]
             else:    
-                response = response + ' ' + Ack[x]
-#        print(response)
-        if response != "": response = "OK"
+                response = response + Ack[x] + ' '
+        print(response)
+        if response == "00 00 FF 00 FF 00 00 00 FF 02 FE D5 15 16 00": response = "OK"
         else: response = "ERROR"
         ser.close()
         return response
 
-    def info(self, NFC_locate):
+    def info(self):
         ser = serial.Serial(NFC_locate, 115200, timeout=1)
         ser.write(self.deviceInfo)
         Ack = str(ser.read(19)).upper().split('\\X')
@@ -52,7 +57,7 @@ class NFC():
         ser.close()
         return response
 
-    def read(self, NFC_locate):
+    def read(self):
         ser = serial.Serial(NFC_locate, 115200, timeout=1)
         ser.write(self.readTag)
         Ack = str(ser.read(45)).upper().split('\\X')
