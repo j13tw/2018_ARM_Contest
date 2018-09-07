@@ -3,6 +3,7 @@ from serial import SerialException
 from flask import Flask, request, render_template, redirect, url_for
 from NFC_Class import NFC
 from STM32_Class import STM32
+from LORA_Class import LORA
 import time
 
 NFC_locate = "COM6"
@@ -11,18 +12,15 @@ LORA_locate = "COM8"
 
 # fake data 
 
-# LORA check "mod get_ver"
-def LORA_response(STM32_locate):
-    return "OK"
-
 # system boot up
 def Client_hotware_boot():
     # STM32_check_device
     stm32 = STM32()
     nfc = NFC()
+    lora = LORA()
     print("STM32_check")
     while (1):
-        if (stm32.STM32_boot(STM32_locate) == "OK"):
+        if (stm32.STM32_boot(SraTM32_locate) == "OK"):
             break
         else:
             print("check_STM32_port\n")
@@ -47,7 +45,7 @@ def Client_hotware_boot():
         time.sleep(1)
     # LORA_check_device
     while (STM32.STM32_response(STM32_locate) != "LORA"):
-        if (LORA.LORA_response(LORA_locate(LORA_locate)) == "OK"):
+        if (lora.LORA_response(lora_locate(LORA_locate)) == "OK"):
             STM32_write("LORA")
         else:
             print("LORA_ERROR")
