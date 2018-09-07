@@ -38,4 +38,5 @@ class STM32():
             ser = serial.Serial(self.STM32_locate, self.buad, timeout=1)
         except:
             return "ERROR"
+        write_command = write_command + '\r\n'
         ser.write(bytes(write_command,'ascii'))

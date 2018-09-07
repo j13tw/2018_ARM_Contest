@@ -30,19 +30,16 @@ def Client_hotware_boot():
     print("STM32_check_boot")
     while(1):
         if (stm32.STM32_response("STM32") == "OK"):
-            print(1)
-            stm32.STM32_write("STM32\r\n")
+            stm32.STM32_write("STM32")
             break
         time.sleep(1)
     # RFID_check_device
     print("RFID_check")
     while(1):
         if (stm32.STM32_response("RFID") != "OK"):
-            print(2)
             while(1):
-                print(3)
                 if (nfc.wake(NFC_locate) == "OK"):
-                    stm32.STM32_write("RFID\r\n")
+                    stm32.STM32_write("RFID")
                     break
                 else:
                     print("RFID_ERROR")
