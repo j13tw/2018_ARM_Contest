@@ -20,7 +20,7 @@ def Client_hotware_boot():
     lora = LORA()
     print("STM32_check")
     while (1):
-        if (stm32.STM32_boot(SraTM32_locate) == "OK"):
+        if (stm32.STM32_boot(STM32_locate) == "OK"):
             break
         else:
             print("check_STM32_port\n")
@@ -36,19 +36,28 @@ def Client_hotware_boot():
     while(1):
         if (stm32.STM32_response("RFID") != "OK"):
             while(1):
-                if (nfc.wake(NFC_locate) == "OK"):
-                    stm32.STM32_write("RFID")
-                    break
+                if (nfc.NFC_boot(NFC_locate) == "OK"):
+                    if (nfc.NFC_wake() == "OK"):
+                        stm32.STM32_write("RFID")
+                        break
+                    else:
+                        print("RFID_ERROR")
                 else:
-                    print("RFID_ERROR")
+                    print("RFID_PORT_ERROR")
             break
         time.sleep(1)
     # LORA_check_device
-    while (STM32.STM32_response(STM32_locate) != "LORA"):
-        if (lora.LORA_response(lora_locate(LORA_locate)) == "OK"):
-            STM32_write("LORA")
-        else:
-            print("LORA_ERROR")
+    while(1)
+        if (STM32.STM32_response("LORA") == "OK"):
+            if (lora.LORA_boot(LORA_locate) == "OK"):
+                if (lora.LORA_write("AT") == "OK"):
+                    STM32_write("LORA")
+                    break
+                else:
+                    print("LORA_ERROR") 
+            else:
+                print("LORA_PORT_ERROR")
+        time.sleep(1)
     
 
 #def Client_software_boot():

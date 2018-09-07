@@ -24,13 +24,13 @@ class STM32():
             return "ERROR"
         response = ser.read(len(check_item))
         ser.close()
-        print(response.decode('ascii'))
-        print(check_item)
+#        print(response.decode('ascii'))
+#        print(check_item)
         if (response.decode('ascii') == check_item):
-            print("OK")
+#            print("OK")
             return "OK"
         else:
-            print("ERROR")
+#            print("ERROR")
             return "ERROR"
 
     def STM32_write(self, write_command):

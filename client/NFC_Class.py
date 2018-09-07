@@ -21,7 +21,15 @@ class NFC():
         self.readTag = bytearray([0, 0, 255, 4, 252, 212, 74, 1, 0, 225, 0])
         self.NFC_locate = ""
 
-    def wake(self, NFC_locate = "COM6"):
+    def NFC_boot(self, NFC_locate = "COM6"):
+        try:
+            ser = serial.Serial(NFC_locate, 115200, timeout=1)
+            return "OK"
+        except:
+            return "ERROR"
+        ser.close()
+
+    def NFC_wake(self, NFC_locate = "COM6"):
         try:
             ser = serial.Serial(NFC_locate, 115200, timeout=1)
         except:
@@ -41,8 +49,11 @@ class NFC():
         ser.close()
         return response
 
-    def info(self):
-        ser = serial.Serial(NFC_locate, 115200, timeout=1)
+    def NFC_info(self):
+         try:
+            ser = serial.Serial(NFC_locate, 115200, timeout=1)
+        except:
+            return "ERROR"
         ser.write(self.deviceInfo)
         Ack = str(ser.read(19)).upper().split('\\X')
  #       response = "return info block = "
@@ -57,8 +68,11 @@ class NFC():
         ser.close()
         return response
 
-    def read(self):
-        ser = serial.Serial(NFC_locate, 115200, timeout=1)
+    def NFC_read(self):
+         try:
+            ser = serial.Serial(NFC_locate, 115200, timeout=1)
+        except:
+            return "ERROR"
         ser.write(self.readTag)
         Ack = str(ser.read(45)).upper().split('\\X')
 #        response = "return card block = "
