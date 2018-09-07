@@ -24,7 +24,7 @@ class STM32():
             return "ERROR"
         response = ser.read(len(check_item))
         ser.close()
-#        print(response.decode('ascii'))
+        print(response.decode('ascii'))
 #        print(check_item)
         if (response.decode('ascii') == check_item):
 #            print("OK")

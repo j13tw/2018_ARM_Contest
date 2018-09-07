@@ -47,7 +47,7 @@ def Client_hotware_boot():
             break
         time.sleep(1)
     # LORA_check_device
-    while(1)
+    while(1):
         if (STM32.STM32_response("LORA") == "OK"):
             if (lora.LORA_boot(LORA_locate) == "OK"):
                 if (lora.LORA_write("AT") == "OK"):
