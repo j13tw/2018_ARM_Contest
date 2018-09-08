@@ -21,7 +21,7 @@ if(lora.LORA_write("AT+NI=1,test12345") != "OK" or errorCode == 1): errorCode = 
 print(errorCode)
 if(lora.LORA_write("AT+NK=1,test12345") != "OK" or errorCode == 1): errorCode = 1
 print(errorCode)
-if(lora.LORA_send("AT+JOIN") == " " or errorCode == 1):  errorCode = 1
+if(lora.LORA_send("AT+JOIN") == "Successfully joined network" or errorCode == 1):  errorCode = 1
 print(errorCode)
 if(lora.LORA_write("AT+RXO=1") != "OK" or errorCode == 1):  errorCode = 1
 print(errorCode)

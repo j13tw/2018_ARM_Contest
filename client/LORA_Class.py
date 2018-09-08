@@ -46,5 +46,5 @@ class LORA():
         ser.read(1000)
         response = ser.read(500)
         ser.close()
-        response = response.decode('ascii').split('\n')[0]
+        response = response.decode('ascii').split('\r\n')[0]
         return response
