@@ -1,0 +1,16 @@
+
+(白卡)
+ID : 0804P!Q9B1
+PWD : CARD-01
+
+(一卡通-中客)
+ID : 0C}D1R02
+PWD : CARD-03
+
+(麥當勞)
+ID : EAJR80F8
+PWD : CARD-02
+
+(一卡通-竹客)
+ID : DC6BD81~
+PWD : CARD-04

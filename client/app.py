@@ -88,12 +88,12 @@ def Client_software_boot():
     lora = LORA()
     nfc.NFC_wake()
 # variable & data configure
-    Card_id = nfc.readTag()
+    Card_id = nfc.NFC_read()
     Send_status = "R"
     Send_command = ""
     response = ""
 # check system status
-    if (Card_id != ""):
+    if (Card_id != "ERROR"):
         Send_status = "R"
         Send_command = '{"status": "' + Send_status + '", "card_id": "' + Card_id + '", "device_id": "' + DEVICE_id + '"}'
         response = lora.LORA_send(Send_command)

@@ -58,6 +58,7 @@ class NFC():
         ser.write(self.deviceInfo)
         Ack = str(ser.read(19)).upper().split('\\X')
  #       response = "return info block = "
+        response = ""
         for x in range(1, len(Ack)):
             if x == len(Ack)-1:
                 response = response + ' ' + Ack[x].split("'")[0]
@@ -76,10 +77,12 @@ class NFC():
             return "ERROR"
         ser.write(self.readTag)
         Ack = str(ser.read(45)).upper().split('\\X')
+        print(Ack)
+        if (len(Ack) <= 7): return "ERROR"
 #        response = "return card block = "
-        for x in range(10, 20):
+        response = ""
+        for x in range(len(Ack)-4, len(Ack)-1):
             response = response + Ack[x]
 #        print(response)
-        if response == "": "ERROR"
         ser.close()
         return response
