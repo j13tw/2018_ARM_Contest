@@ -1,0 +1,8 @@
+AT&F
+AT&W
+AT+FSB=7
+AT+NI=1,test12345
+AT+NK=1,test12345
+(send)AT+JOIN
+AT+RXO=1
+AT+TXDR=DR3
