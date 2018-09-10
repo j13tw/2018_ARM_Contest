@@ -95,7 +95,8 @@ def Client_software_boot():
 # check system status
     if (Card_id != "ERROR"):
         Send_status = "R"
-        Send_command = 'AT+SEND={"status": "' + Send_status + '", "card_id": "' + Card_id + '", "device_id": "' + DEVICE_id + '"}'
+#        Send_command = 'AT+SEND={"status": "' + Send_status + '", "card_id": "' + Card_id + '", "device_id": "' + DEVICE_id + '"}'
+        Send_command = 'AT+SEND={"status": "1", "card_id": "2", "device_id": "13"}'
         response = lora.LORA_send(Send_command).replace("'", '"')
         print(response)
         stm32.STM32_write(response)

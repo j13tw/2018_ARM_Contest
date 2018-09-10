@@ -78,7 +78,7 @@ class NFC():
         ser.write(self.readTag)
         Ack = str(ser.read(45)).upper().split('\\X')
         ser.close()
-        print(Ack)
+#        print(Ack)
         if (len(Ack) <= 7): return "ERROR"
 #        response = "return card block = "
         response = ""
