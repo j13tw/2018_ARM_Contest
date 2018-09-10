@@ -7,9 +7,9 @@ from LORA_Class import LORA
 import time
 
 # config data
-NFC_locate = "COM6"
-STM32_locate = "COM3"
-LORA_locate = "COM8"
+NFC_locate = "/dev/ttyUSB0"
+STM32_locate = "/dev/ttyACM2"
+LORA_locate = "/dev/ttyACM0"
 DEVICE_id = "IMAC-001" 
 
 # system hotware boot up
@@ -80,12 +80,12 @@ def Lora_network_connect():
 
 # system hotware boot up
 def Client_software_boot():
-# use extern varable
-    global DEVICE_id
 # make Class function to use 
     stm32 = STM32()
     nfc = NFC()
     lora = LORA()
+    lora.LORA_boot(LORA_locate)
+    nfc.NFC_boot(NFC_locate)
     nfc.NFC_wake()
 # variable & data configure
     Card_id = nfc.NFC_read()
@@ -95,18 +95,17 @@ def Client_software_boot():
 # check system status
     if (Card_id != "ERROR"):
         Send_status = "R"
-        Send_command = '{"status": "' + Send_status + '", "card_id": "' + Card_id + '", "device_id": "' + DEVICE_id + '"}'
-        response = lora.LORA_send(Send_command)
+        Send_command = 'AT+SEND={"status": "' + Send_status + '", "card_id": "' + Card_id + '", "device_id": "' + DEVICE_id + '"}'
+        response = lora.LORA_send(Send_command).replace("'", '"')
         print(response)
         stm32.STM32_write(response)
         response = ""
-    else:
-        Client_software_boot()
 
 while (1):
     Client_hotware_boot()
     if (Lora_network_connect() == 0):
         print("Network-OK")
-        Client_software_boot()
+        while(1):
+            Client_software_boot()
     else:
         print("Network-ERROR")
